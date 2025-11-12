@@ -1,0 +1,30 @@
+# CETRO LOCADORA - Modelo Base (Flask + PostgreSQL)
+
+## O que este repo contém
+- Aplicação Flask com telas essenciais: login, locações (tela inicial), clientes, veículos, financeiro.
+- Geração simples de contrato em PDF.
+- Backup script that does pg_dump and uploads to Google Drive (service account).
+- Pronto para deploy no Railway (PostgreSQL) — Procfile incluído.
+
+## Variáveis de ambiente necessárias (Railway)
+- SECRET_KEY
+- DATABASE_URL (fornecido pelo Railway PostgreSQL)
+- GDRIVE_FOLDER_ID (ID da pasta no Google Drive)
+- GOOGLE_CREDENTIALS_JSON (nome do arquivo de credenciais JSON colocado no repositório / secret)
+- BACKUP_HOUR (opcional, default 18)
+
+## Deploy no Railway (passos rápidos)
+1. Crie um repositório no GitHub chamado `cetro-locadora` e envie todos os arquivos deste pacote.
+2. No Railway: `New Project` → `GitHub Repository` → cole o link do repositório `smaylewesley-sudo/cetro-locadora`
+3. Crie um plugin/service PostgreSQL no Railway (ele fornece `DATABASE_URL`).
+4. Nas Environment Variables do projeto, configure `SECRET_KEY`, `GDRIVE_FOLDER_ID` e carregue o `GOOGLE_CREDENTIALS_JSON` (conteúdo do JSON como Secret).
+5. Clique em Deploy. O Railway executará o `Procfile` (gunicorn).
+6. Acesse o domínio temporário fornecido pelo Railway (`https://cetrolocadora.up.railway.app`) e faça login em `/login` com:
+   - Usuário: `cetro`
+   - Senha: `admin123`
+
+## Observações
+- Substitua `static/logo.png` e `static/fundo.jpg` por suas imagens de alta qualidade (SUVs e sedãs).
+- Para emissão de boletos/Pagamentos: adicione integração ao gateway (Gerencianet / Mercado Pago / Pagar.me) conforme necessidade.
+- Para PDFs mais sofisticados (contratos Word com placeholders, assinaturas eletrônicas), integrar `python-docx` e serviços de assinatura (ex: Clicksign, DocuSign).
+
